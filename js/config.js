@@ -27,6 +27,11 @@ window.DASHBOARD_CONFIG = {
   background: "",
   backgroundDim: 0.45, // darkening over the image: 0 = none, 1 = black
 
+  // Tile transparency (0 = fully see-through, 1 = solid). The selected tile
+  // is always shown solid.
+  tileOpacity: 0.35, // background of the Add favorites / All apps / Settings tiles
+  appTileOpacity: 0.8, // whole app tiles (banners) when not selected
+
   cards: [
     // Apps you pin on the TV with "Add favorites" (up to 8).
     { type: "favorites", max: 8 },

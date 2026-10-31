@@ -124,6 +124,12 @@ Tips: a 1920×1080 JPEG under ~1 MB works best on this TV's limited memory.
 `backgroundDim` in `js/config.js` controls how much the image is darkened so
 the tiles stay readable (0 = none, 1 = black; default 0.45).
 
+Tile transparency is set in `js/config.js` too (0 = fully see-through,
+1 = solid; the selected tile is always solid):
+
+- `tileOpacity`: the Add favorites / All apps / Settings tiles (default 0.35)
+- `appTileOpacity`: your app tiles when not selected (default 0.8)
+
 ## Make it the TV's home screen (replace the Google TV launcher)
 
 The app can also act as the TV's home screen, with no Google TV

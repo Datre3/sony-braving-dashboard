@@ -6,6 +6,10 @@
   const cfg = window.DASHBOARD_CONFIG;
   const dim = cfg.backgroundDim != null ? cfg.backgroundDim : 0.45;
 
+  const root = document.documentElement.style;
+  if (cfg.tileOpacity != null) root.setProperty("--tile-alpha", cfg.tileOpacity);
+  if (cfg.appTileOpacity != null) root.setProperty("--app-tile-opacity", cfg.appTileOpacity);
+
   function apply() {
     const version = window.TvBridge && window.TvBridge.backgroundVersion
       ? window.TvBridge.backgroundVersion()
