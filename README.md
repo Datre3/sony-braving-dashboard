@@ -17,7 +17,34 @@ Everything lives in [`js/config.js`](js/config.js): your name, 12/24-hour time,
 °F/°C, weather location, and the list of cards. Reorder, add, or remove cards
 there. Give a card `size: "wide"` or `size: "tall"` to make it bigger.
 
-## Install it on the TV (home-screen app)
+## Install it on the TV from your phone (no computer)
+
+GitHub builds the app automatically every time this repo changes (see
+[`.github/workflows/build-tv-app.yml`](.github/workflows/build-tv-app.yml)).
+The newest build is always at:
+
+```
+https://github.com/Datre3/sony-braving-dashboard/releases/latest/download/bravia-dashboard.apk
+```
+
+1. **Get a short code (on your phone).** Typing that link with a remote is
+   painful. Open **go.aftvnews.com** on your phone, paste the link, and note
+   the short number code it gives you.
+2. **Install Downloader (on the TV).** Open the Google Play Store on the TV,
+   search for **Downloader** (by AFTVnews) and install it.
+3. **Allow it to install apps.** Open Downloader. When it asks, allow it to
+   install unknown apps. If it doesn't ask, go to *Settings → Apps → Security &
+   restrictions → Unknown sources* and turn on **Downloader**.
+4. **Download and install.** In Downloader, type the short code (or the full
+   link) and press *Go*. When the download finishes, choose **Install**.
+5. **Pin the tile.** *Dashboard* now appears under *Apps* on the home screen.
+   Long-press it and add it to your favorites row.
+
+**Updating:** edit `js/config.js` on GitHub (this works from the phone's
+browser or the GitHub app). Wait about 5 minutes for the new build, then repeat
+step 4 with the same code. It installs over the old version.
+
+## Install it on the TV with a computer
 
 The Android TV app lives in [`android/`](android/). It bundles the dashboard
 (`index.html`, `css/`, `js/`) inside the APK, so nothing needs to be hosted.

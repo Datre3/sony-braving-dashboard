@@ -15,12 +15,23 @@ android {
         versionName = "1.0"
     }
 
+    signingConfigs {
+        // A fixed, non-secret key used only for sideloading onto your own TV.
+        // Keeping it in the repo means every build (local or GitHub Actions) has
+        // the same signature, so new versions install over old ones.
+        // Generate a private key before publishing to the Play Store.
+        create("sideload") {
+            storeFile = file("sideload.keystore")
+            storePassword = "android"
+            keyAlias = "sideload"
+            keyPassword = "android"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
-            // Sign release builds with the debug key so the APK can be sideloaded
-            // without setting up a keystore. Use a real key before publishing.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("sideload")
         }
     }
 
