@@ -15,7 +15,6 @@
 
 html, body {
   margin: 0;
-  height: 100%;
   background: var(--bg);
   color: var(--text);
   font-family: "Roboto", "Segoe UI", system-ui, sans-serif;
@@ -23,7 +22,15 @@ html, body {
   cursor: none; /* no pointer on a TV */
 }
 
+html { height: 100%; }
+
+/* The page is always laid out at 1920x1080 and scaled to fit the screen by
+   js/fit.js, so it looks the same whatever zoom the TV's WebView uses. */
 body {
+  box-sizing: border-box;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: 0 0;
   display: flex;
   flex-direction: column;
   /* TV-safe area: keep content away from the bezel (~5% overscan) */

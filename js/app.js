@@ -23,7 +23,8 @@
     const h = new Date().getHours();
     const part = h < 12 ? "morning" : h < 18 ? "afternoon" : "evening";
     greeting.textContent = `Good ${part}${cfg.name ? ", " + cfg.name : ""}`;
-    status.textContent = navigator.onLine ? "● Online" : "○ Offline";
+    const build = window.TvBridge && window.TvBridge.version ? " · " + window.TvBridge.version() : "";
+    status.textContent = (navigator.onLine ? "● Online" : "○ Offline") + build;
   };
   updateHeader();
   setInterval(updateHeader, 60 * 1000);

@@ -11,8 +11,10 @@ android {
         applicationId = "com.bravia.dashboard"
         minSdk = 21
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        // GitHub Actions sets the run number, so every build is numbered.
+        val buildNumber = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 1
+        versionCode = buildNumber
+        versionName = "build $buildNumber"
     }
 
     signingConfigs {

@@ -38,10 +38,6 @@ class MainActivity : Activity() {
             setBackgroundColor(Color.TRANSPARENT) // show the themed window background
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
-            // Honour <meta name="viewport" content="width=1920"> so the layout
-            // scales to the TV regardless of its screen density.
-            settings.useWideViewPort = true
-            settings.loadWithOverviewMode = true
             webViewClient = DashboardClient()
             addJavascriptInterface(TvBridge(), "TvBridge")
             isFocusable = true
@@ -115,6 +111,9 @@ class MainActivity : Activity() {
                 }
             }
         }
+
+        @JavascriptInterface
+        fun version(): String = packageManager.getPackageInfo(packageName, 0).versionName ?: ""
 
         /** Installed TV apps as JSON: [{name, package, banner?, icon?}], banners/icons as data URIs. */
         @JavascriptInterface
