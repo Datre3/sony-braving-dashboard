@@ -17,16 +17,9 @@ window.DASHBOARD_CONFIG = {
   units: "fahrenheit", // or "celsius"
 
   cards: [
-    { type: "clock", size: "wide" },
-    {
-      type: "weather",
-      size: "wide",
-      title: "Weather",
-      // Set to your location (find coordinates at https://open-meteo.com)
-      location: { label: "New York", lat: 40.71, lon: -74.01 },
-    },
     {
       type: "app",
+      size: "wide tall",
       name: "YouTube",
       subtitle: "Watch",
       icon: "▶",
@@ -36,45 +29,13 @@ window.DASHBOARD_CONFIG = {
     },
     {
       type: "app",
-      name: "Netflix",
-      subtitle: "Continue watching",
-      icon: "N",
-      color: "#8e0b13",
-      package: "com.netflix.ninja",
-      url: "https://www.netflix.com",
-    },
-    {
-      type: "agenda",
-      size: "wide",
-      title: "Today",
-      items: [
-        { time: "6:00 PM", text: "Dinner" },
-        { time: "8:00 PM", text: "Movie night" },
-      ],
-    },
-    {
-      type: "notes",
-      size: "wide",
-      title: "Notes",
-      items: ["Charge the remote", "Pick up popcorn"],
-    },
-    {
-      type: "app",
-      name: "Spotify",
-      subtitle: "Music",
-      icon: "♫",
-      color: "#1a7f43",
-      package: "com.spotify.tv.android",
-      url: "https://open.spotify.com",
-    },
-    {
-      type: "app",
-      name: "Prime Video",
+      size: "wide tall",
+      name: "Disney+",
       subtitle: "Watch",
-      icon: "▷",
-      color: "#1a6fb0",
-      package: "com.amazon.amazonvideo.livingroom",
-      url: "https://www.primevideo.com",
+      icon: "D+",
+      color: "#0e1b4d",
+      package: "com.disney.disneyplus",
+      url: "https://www.disneyplus.com",
     },
   ],
 };

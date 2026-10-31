@@ -7,8 +7,9 @@ tiles on the dashboard launch the real installed TV apps.
 
 ![Home-screen banner](android/app/src/main/res/drawable-xhdpi/banner.png)
 
-**Cards included:** clock, live weather (Open-Meteo, no API key needed), app
-launch tiles, today's agenda, and notes.
+**Currently on the dashboard:** YouTube and Disney+ launch tiles.
+**Other card types available:** clock, live weather (Open-Meteo, no API key
+needed), today's agenda, and notes. See `js/config.js`.
 
 ## Customise
 
@@ -64,6 +65,7 @@ After editing `js/config.js`, rebuild and reinstall to update the app.
 | App | Package |
 | --- | --- |
 | YouTube | `com.google.android.youtube.tv` |
+| Disney+ | `com.disney.disneyplus` |
 | Netflix | `com.netflix.ninja` |
 | Prime Video | `com.amazon.amazonvideo.livingroom` |
 | Spotify | `com.spotify.tv.android` |
