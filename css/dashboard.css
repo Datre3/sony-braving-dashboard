@@ -1,0 +1,109 @@
+/* Designed for a 1920x1080 TV viewport; scales down for other sizes. */
+:root {
+  --bg: #0b0f17;
+  --card: #151b27;
+  --card-hi: #1d2535;
+  --text: #f2f4f8;
+  --muted: #8b95a8;
+  --accent: #4f9dff;
+  --focus: #ffffff;
+  --radius: 24px;
+  --gap: 32px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Roboto", "Segoe UI", system-ui, sans-serif;
+  overflow: hidden;
+  cursor: none; /* no pointer on a TV */
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  /* TV-safe area: keep content away from the bezel (~5% overscan) */
+  padding: 54px 96px 40px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--gap);
+}
+.greeting { font-size: 48px; font-weight: 500; }
+.status   { font-size: 28px; color: var(--muted); }
+
+.grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 1fr;
+  gap: var(--gap);
+  min-height: 0;
+}
+
+.card {
+  position: relative;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  outline: none;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.card.wide { grid-column: span 2; }
+.card.tall { grid-row: span 2; }
+
+.card:focus {
+  background: var(--card-hi);
+  transform: scale(1.04);
+  box-shadow: 0 0 0 6px var(--focus), 0 20px 60px rgba(0, 0, 0, .6);
+  z-index: 1;
+}
+
+.card-title {
+  font-size: 22px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+.card-body { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+
+/* Clock */
+.clock-time { font-size: 120px; font-weight: 300; line-height: 1; font-variant-numeric: tabular-nums; }
+.clock-date { font-size: 32px; color: var(--muted); margin-top: 12px; }
+
+/* Weather */
+.weather-now { display: flex; align-items: center; gap: 24px; }
+.weather-icon { font-size: 96px; line-height: 1; }
+.weather-temp { font-size: 88px; font-weight: 300; }
+.weather-desc { font-size: 28px; color: var(--muted); margin-top: 8px; }
+.card-body.weather { flex-direction: row; align-items: center; gap: 40px; }
+.weather-days { flex: 1; display: flex; justify-content: space-between; font-size: 28px; }
+.weather-days div { text-align: center; line-height: 1.5; }
+.weather-days span { display: block; color: var(--muted); font-size: 22px; }
+
+/* App tile */
+.card.app { justify-content: flex-end; color: #fff; }
+.card.app .app-icon { font-size: 72px; margin-bottom: auto; }
+.card.app .app-name { font-size: 36px; font-weight: 500; }
+.card.app .app-sub  { font-size: 22px; opacity: .8; margin-top: 4px; }
+
+/* Lists (agenda, notes) */
+.list { list-style: none; margin: 0; padding: 0; font-size: 28px; }
+.list li { padding: 14px 0; border-bottom: 1px solid #ffffff14; display: flex; gap: 20px; }
+.list li:last-child { border-bottom: none; }
+.list .when { color: var(--accent); min-width: 110px; font-variant-numeric: tabular-nums; }
+
+.hint { margin-top: 24px; text-align: center; color: var(--muted); font-size: 22px; }
+
+.error { color: #ff8a80; font-size: 24px; }
