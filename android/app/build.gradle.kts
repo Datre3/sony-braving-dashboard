@@ -52,7 +52,7 @@ android {
 
 val copyDashboard by tasks.registering(Sync::class) {
     from(rootProject.projectDir.parentFile) {
-        include("index.html", "css/**", "js/**")
+        include("index.html", "css/**", "js/**", "images/**")
     }
     into(layout.buildDirectory.dir("generated/dashboard/dashboard"))
 }

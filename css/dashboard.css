@@ -72,6 +72,18 @@ body {
   transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
 }
 .card.wide { grid-column: span 2; }
+
+/* With a background image: see-through cards and shadowed text so the photo
+   shows and labels stay readable. */
+body.has-bg {
+  background-size: cover;
+  background-position: center;
+}
+body.has-bg .card { background: rgba(21, 27, 39, .78); }
+body.has-bg .card:focus { background: rgba(29, 37, 53, .92); }
+body.has-bg .topbar,
+body.has-bg .hint { text-shadow: 0 2px 8px rgba(0, 0, 0, .8); }
+body.has-bg .hint { color: var(--text); }
 .card.tall { grid-row: span 2; }
 .card.full { grid-column: 1 / -1; }
 .card.bottom { grid-row: 3; }

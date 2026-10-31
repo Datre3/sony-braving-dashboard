@@ -21,6 +21,12 @@ window.DASHBOARD_CONFIG = {
   use24h: false,
   units: "fahrenheit", // or "celsius"
 
+  // Background image. Easiest: push one to the TV with adb (see README), no
+  // rebuild needed. Or set a path to an image in this repo's images/ folder,
+  // e.g. "images/background.jpg", or an https:// URL.
+  background: "",
+  backgroundDim: 0.45, // darkening over the image: 0 = none, 1 = black
+
   cards: [
     // Apps you pin on the TV with "Add favorites" (up to 8).
     { type: "favorites", max: 8 },
@@ -29,7 +35,6 @@ window.DASHBOARD_CONFIG = {
       name: "Add favorites",
       subtitle: "Pin apps here",
       icon: "+",
-      color: "#1d2535",
       size: "bottom", // keep on the bottom row
       action: "editfavorites",
     },
@@ -38,7 +43,6 @@ window.DASHBOARD_CONFIG = {
       name: "All apps",
       subtitle: "Everything installed",
       icon: "▦",
-      color: "#1d2535",
       size: "bottom", // keep on the bottom row
       action: "allapps",
     },
@@ -47,7 +51,6 @@ window.DASHBOARD_CONFIG = {
       name: "Settings",
       subtitle: "TV settings",
       icon: "⚙",
-      color: "#1d2535",
       size: "bottom", // keep on the bottom row
       action: "settings",
     },

@@ -14,12 +14,16 @@ import android.provider.Settings
 import android.util.Base64
 import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileInputStream
 
 /**
  * Full-screen host for the web dashboard bundled in assets/dashboard/.
@@ -31,9 +35,14 @@ class MainActivity : Activity() {
     private lateinit var webView: WebView
     private val prefs by lazy { getSharedPreferences("dashboard", MODE_PRIVATE) }
 
+    // Background images pushed with adb land here:
+    // /sdcard/Android/data/com.bravia.dashboard/files/background.jpg
+    private val backgroundDir by lazy { getExternalFilesDir(null) }
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        backgroundDir // creates the folder so adb can push into it
 
         webView = WebView(this).apply {
             setBackgroundColor(Color.TRANSPARENT) // show the themed window background
@@ -73,6 +82,8 @@ class MainActivity : Activity() {
     override fun onResume() {
         super.onResume()
         webView.onResume()
+        // Pick up a background image pushed while we were in the background.
+        webView.evaluateJavascript("window.refreshBackground && window.refreshBackground()", null)
     }
 
     override fun onPause() {
@@ -93,6 +104,28 @@ class MainActivity : Activity() {
             openUrl(url)
             return true
         }
+
+        /** Serves the pushed background image at https://dashboard.local/background. */
+        override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
+            if (request.url.host != BACKGROUND_HOST) return null
+            val file = backgroundFile()
+                ?: return WebResourceResponse(
+                    "text/plain", "utf-8", 404, "Not Found", emptyMap(), ByteArrayInputStream(ByteArray(0))
+                )
+            val mime = when (file.extension.lowercase()) {
+                "png" -> "image/png"
+                "webp" -> "image/webp"
+                else -> "image/jpeg"
+            }
+            return WebResourceResponse(mime, null, FileInputStream(file))
+        }
+    }
+
+    private fun backgroundFile(): File? {
+        val dir = backgroundDir ?: return null
+        return listOf("jpg", "jpeg", "png", "webp")
+            .map { File(dir, "background.$it") }
+            .firstOrNull { it.isFile }
     }
 
     /** Exposed to the page as `window.TvBridge`. */
@@ -120,6 +153,10 @@ class MainActivity : Activity() {
         fun setFavorites(json: String) {
             prefs.edit().putString(KEY_FAVORITES, json).apply()
         }
+
+        /** Changes whenever the pushed background image changes; empty if there is none. */
+        @JavascriptInterface
+        fun backgroundVersion(): String = backgroundFile()?.lastModified()?.toString() ?: ""
 
         @JavascriptInterface
         fun version(): String = packageManager.getPackageInfo(packageName, 0).versionName ?: ""
@@ -190,5 +227,6 @@ class MainActivity : Activity() {
         private const val ASSET_ROOT = "file:///android_asset/dashboard/"
         private const val DASHBOARD_URL = ASSET_ROOT + "index.html"
         private const val KEY_FAVORITES = "favorites"
+        private const val BACKGROUND_HOST = "dashboard.local"
     }
 }

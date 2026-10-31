@@ -100,6 +100,30 @@ After editing `js/config.js`, rebuild and reinstall to update the app.
 
 If an app isn't installed, the tile opens its Play Store page instead.
 
+## Custom background image
+
+**From your computer, no rebuild needed:** push any photo to the TV with adb.
+Name it `background.jpg` (`.png` and `.webp` also work):
+
+```sh
+adb push my-photo.jpg /sdcard/Android/data/com.bravia.dashboard/files/background.jpg
+```
+
+Press **Home** (or reopen the dashboard) and it appears. Push a new file to
+change it. To remove it:
+
+```sh
+adb shell rm /sdcard/Android/data/com.bravia.dashboard/files/background.jpg
+```
+
+**Built into the app instead:** put the image in this repo's `images/` folder
+and set `background: "images/your-photo.jpg"` in `js/config.js`. A pushed image
+takes priority over this.
+
+Tips: a 1920×1080 JPEG under ~1 MB works best on this TV's limited memory.
+`backgroundDim` in `js/config.js` controls how much the image is darkened so
+the tiles stay readable (0 = none, 1 = black; default 0.45).
+
 ## Make it the TV's home screen (replace the Google TV launcher)
 
 The app can also act as the TV's home screen, with no Google TV
