@@ -108,6 +108,7 @@
     );
     node.dataset.url = card.url || "";
     node.dataset.package = card.package || "";
+    node.dataset.action = card.action || "";
     return node;
   }
 
@@ -132,7 +133,12 @@
   // Open an app tile. Inside the Android TV app this launches the installed
   // app by package name; in a plain browser it follows the URL.
   window.launchTile = function (node) {
-    const { url, package: pkg } = node.dataset;
+    const { url, package: pkg, action } = node.dataset;
+    if (action === "allapps") return window.showAllApps();
+    if (action === "settings") {
+      if (window.TvBridge) window.TvBridge.openSettings();
+      return;
+    }
     if (!url && !pkg) return;
     if (window.TvBridge) {
       window.TvBridge.launch(pkg || "", url || "");

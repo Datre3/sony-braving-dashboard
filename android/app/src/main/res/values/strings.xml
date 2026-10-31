@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Dashboard</string>
     <string name="app_not_installed">%1$s isn\'t installed on this TV</string>
+    <string name="settings_unavailable">Couldn\'t open Settings</string>
 </resources>

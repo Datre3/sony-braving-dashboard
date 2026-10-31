@@ -6,6 +6,8 @@
  *   weather  – current conditions + 4-day forecast (Open-Meteo, no API key)
  *   app      – a launch tile. In the Android TV app, `package` launches the
  *              installed app; `url` is used in a browser or as a fallback.
+ *              Use `action: "allapps"` for the All apps screen or
+ *              `action: "settings"` for TV settings instead of a package.
  *   agenda   – a list of { time, text } items
  *   notes    – a list of plain strings
  *
@@ -36,6 +38,24 @@ window.DASHBOARD_CONFIG = {
       color: "#0e1b4d",
       package: "com.disney.disneyplus",
       url: "https://www.disneyplus.com",
+    },
+    {
+      type: "app",
+      size: "wide",
+      name: "All apps",
+      subtitle: "Everything installed",
+      icon: "▦",
+      color: "#1d2535",
+      action: "allapps",
+    },
+    {
+      type: "app",
+      size: "wide",
+      name: "Settings",
+      subtitle: "TV settings",
+      icon: "⚙",
+      color: "#1d2535",
+      action: "settings",
     },
   ],
 };

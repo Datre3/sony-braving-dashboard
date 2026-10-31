@@ -99,6 +99,44 @@ After editing `js/config.js`, rebuild and reinstall to update the app.
 
 If an app isn't installed, the tile opens its Play Store page instead.
 
+## Make it the TV's home screen (replace the Google TV launcher)
+
+The app can also act as the TV's home screen, with no Google TV
+recommendations or ads. The dashboard includes an **All apps** tile that lists
+everything installed, and a **Settings** tile so you can always reach the TV
+settings.
+
+Google TV doesn't let you choose a different home app in Settings, so you
+switch the stock launcher off with adb (no root needed, fully reversible):
+
+```sh
+# 1. Find the stock launcher's package name
+adb shell cmd package resolve-activity -a android.intent.action.MAIN -c android.intent.category.HOME
+
+# 2. Disable it (Google TV: com.google.android.apps.tv.launcherx,
+#    older Android TV: com.google.android.tvlauncher)
+adb shell pm disable-user --user 0 com.google.android.apps.tv.launcherx
+adb shell pm disable-user --user 0 com.google.android.tungsten.setupwraith   # Google TV only
+
+# 3. Press Home on the remote: the dashboard is now the home screen.
+```
+
+**To undo it** (or if anything goes wrong), re-enable the stock launcher:
+
+```sh
+adb shell pm enable com.google.android.apps.tv.launcherx
+adb shell pm enable com.google.android.tungsten.setupwraith
+```
+
+A factory reset also restores it. Things that live inside the Google TV
+launcher (its profile switcher and *For you* recommendations) won't be
+available while it's disabled. Apps, inputs, the Settings button and voice
+search on the remote keep working.
+
+**Lower-risk alternative:** Google TV has a built-in *Apps only mode* that
+removes recommendations without replacing the launcher: *Settings → Accounts &
+sign-in → (your account) → Apps only mode*.
+
 ## Alternative: open it in the TV browser
 
 The dashboard also runs as a plain web page. Host the repo root with GitHub

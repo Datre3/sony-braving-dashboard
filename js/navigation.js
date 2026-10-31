@@ -8,6 +8,11 @@
     37: "left", 39: "right", 38: "up", 40: "down",
   };
 
+  // Cards in the All apps screen when it's open, otherwise the dashboard.
+  function scope() {
+    return document.querySelector(".overlay:not([hidden])") || document.getElementById("grid");
+  }
+
   // Gap between two ranges on one axis (0 when they overlap).
   function gap(a1, a2, b1, b2) {
     return Math.max(0, b1 - a2, a1 - b2);
@@ -18,7 +23,7 @@
     let best = null;
     let bestScore = Infinity;
 
-    document.querySelectorAll(".card").forEach((card) => {
+    scope().querySelectorAll(".card").forEach((card) => {
       if (card === from) return;
       const b = card.getBoundingClientRect();
       const inDir =
@@ -53,12 +58,19 @@
     if (dir) {
       e.preventDefault();
       if (!active || !active.classList.contains("card")) {
-        const first = document.querySelector(".card");
+        const first = scope().querySelector(".card");
         if (first) first.focus();
         return;
       }
       const target = nextCard(active, dir);
       if (target) target.focus();
+      return;
+    }
+
+    // Back in a desktop browser (the Android app handles the remote's Back).
+    if (e.key === "Escape" || e.key === "Backspace") {
+      e.preventDefault();
+      if (window.handleBack) window.handleBack();
       return;
     }
 
