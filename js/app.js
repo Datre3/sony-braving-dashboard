@@ -36,6 +36,13 @@
   window.addEventListener("online", updateHeader);
   window.addEventListener("offline", updateHeader);
 
-  const first = grid.querySelector(".card:not(.static)");
-  if (first) first.focus();
+  // Focus the first tile unless a tile (dashboard or All apps) already has it.
+  window.ensureFocus = function () {
+    const active = document.activeElement;
+    if (active && active.classList.contains("card") && active.isConnected) return;
+    const first = (document.querySelector(".overlay:not([hidden])") || grid)
+      .querySelector(".card:not(.static)");
+    if (first) first.focus();
+  };
+  window.ensureFocus();
 })();

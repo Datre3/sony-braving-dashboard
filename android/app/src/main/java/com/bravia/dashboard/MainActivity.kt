@@ -82,8 +82,14 @@ class MainActivity : Activity() {
     override fun onResume() {
         super.onResume()
         webView.onResume()
-        // Pick up a background image pushed while we were in the background.
-        webView.evaluateJavascript("window.refreshBackground && window.refreshBackground()", null)
+        // Pick up a background image pushed while we were in the background,
+        // and make sure a tile is selected after returning from another app.
+        webView.requestFocus()
+        webView.evaluateJavascript(
+            "window.refreshBackground && window.refreshBackground();" +
+                "window.ensureFocus && window.ensureFocus()",
+            null
+        )
     }
 
     override fun onPause() {
