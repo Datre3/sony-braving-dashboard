@@ -27,7 +27,7 @@
   const updateHeader = () => {
     const h = new Date().getHours();
     const part = h < 12 ? "morning" : h < 18 ? "afternoon" : "evening";
-    greeting.textContent = `Good ${part}${cfg.name ? ", " + cfg.name : ""}`;
+    greeting.textContent = cfg.greeting || `Good ${part}${cfg.name ? ", " + cfg.name : ""}`;
     const build = window.TvBridge && window.TvBridge.version ? " · " + window.TvBridge.version() : "";
     status.textContent = (navigator.onLine ? "● Online" : "○ Offline") + build;
   };

@@ -18,6 +18,9 @@
  */
 window.DASHBOARD_CONFIG = {
   name: "", // shown in the greeting, e.g. "Good evening, Sam"
+  // Custom header text instead of "Good morning/afternoon/evening".
+  // Set to "" to go back to the time-of-day greeting.
+  greeting: "Happy Birthday Zane!",
   use24h: false,
   units: "fahrenheit", // or "celsius"
 
