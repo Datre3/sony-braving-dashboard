@@ -62,9 +62,9 @@
       return;
     }
 
-    if ((e.key === "Enter" || e.keyCode === 13) && active && active.dataset.url) {
+    if ((e.key === "Enter" || e.keyCode === 13) && active && active.classList.contains("card")) {
       e.preventDefault();
-      window.location.href = active.dataset.url;
+      window.launchTile(active);
     }
   });
 })();

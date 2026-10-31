@@ -4,7 +4,8 @@
  * Card types:
  *   clock    – time and date
  *   weather  – current conditions + 4-day forecast (Open-Meteo, no API key)
- *   app      – a launch tile; `url` opens in the TV browser
+ *   app      – a launch tile. In the Android TV app, `package` launches the
+ *              installed app; `url` is used in a browser or as a fallback.
  *   agenda   – a list of { time, text } items
  *   notes    – a list of plain strings
  *
@@ -30,6 +31,7 @@ window.DASHBOARD_CONFIG = {
       subtitle: "Watch",
       icon: "▶",
       color: "#c4302b",
+      package: "com.google.android.youtube.tv",
       url: "https://www.youtube.com/tv",
     },
     {
@@ -38,6 +40,7 @@ window.DASHBOARD_CONFIG = {
       subtitle: "Continue watching",
       icon: "N",
       color: "#8e0b13",
+      package: "com.netflix.ninja",
       url: "https://www.netflix.com",
     },
     {
@@ -61,15 +64,17 @@ window.DASHBOARD_CONFIG = {
       subtitle: "Music",
       icon: "♫",
       color: "#1a7f43",
+      package: "com.spotify.tv.android",
       url: "https://open.spotify.com",
     },
     {
       type: "app",
-      name: "Photos",
-      subtitle: "Slideshow",
-      icon: "◉",
-      color: "#3b5bdb",
-      url: "https://photos.google.com",
+      name: "Prime Video",
+      subtitle: "Watch",
+      icon: "▷",
+      color: "#1a6fb0",
+      package: "com.amazon.amazonvideo.livingroom",
+      url: "https://www.primevideo.com",
     },
   ],
 };

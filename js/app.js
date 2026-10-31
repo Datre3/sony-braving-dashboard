@@ -14,7 +14,7 @@
   // Mouse/touch fallback for app tiles
   grid.addEventListener("click", (e) => {
     const card = e.target.closest(".card");
-    if (card && card.dataset.url) window.location.href = card.dataset.url;
+    if (card) window.launchTile(card);
   });
 
   const greeting = document.getElementById("greeting");

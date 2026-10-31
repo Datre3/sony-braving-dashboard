@@ -107,6 +107,7 @@
       el("div", "app-sub", card.subtitle || "")
     );
     node.dataset.url = card.url || "";
+    node.dataset.package = card.package || "";
     return node;
   }
 
@@ -127,4 +128,16 @@
   const notes = (card) => list(card, (text) => el("li", null, "• " + text));
 
   window.CARD_TYPES = { clock, weather, app, agenda, notes };
+
+  // Open an app tile. Inside the Android TV app this launches the installed
+  // app by package name; in a plain browser it follows the URL.
+  window.launchTile = function (node) {
+    const { url, package: pkg } = node.dataset;
+    if (!url && !pkg) return;
+    if (window.TvBridge) {
+      window.TvBridge.launch(pkg || "", url || "");
+    } else if (url) {
+      window.location.href = url;
+    }
+  };
 })();
