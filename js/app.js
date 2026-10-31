@@ -2,14 +2,19 @@
   const cfg = window.DASHBOARD_CONFIG;
   const grid = document.getElementById("grid");
 
-  cfg.cards.forEach((card) => {
-    const render = window.CARD_TYPES[card.type];
-    if (!render) {
-      console.warn("Unknown card type:", card.type);
-      return;
-    }
-    grid.appendChild(render(card, cfg));
-  });
+  // Renderers return one card or an array of cards (e.g. favorites).
+  window.renderDashboard = function () {
+    grid.replaceChildren();
+    cfg.cards.forEach((card) => {
+      const render = window.CARD_TYPES[card.type];
+      if (!render) {
+        console.warn("Unknown card type:", card.type);
+        return;
+      }
+      [].concat(render(card, cfg)).forEach((node) => grid.appendChild(node));
+    });
+  };
+  window.renderDashboard();
 
   // Mouse/touch fallback for app tiles
   grid.addEventListener("click", (e) => {
@@ -31,6 +36,6 @@
   window.addEventListener("online", updateHeader);
   window.addEventListener("offline", updateHeader);
 
-  const first = grid.querySelector(".card");
+  const first = grid.querySelector(".card:not(.static)");
   if (first) first.focus();
 })();

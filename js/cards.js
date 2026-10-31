@@ -128,13 +128,33 @@
 
   const notes = (card) => list(card, (text) => el("li", null, "• " + text));
 
-  window.CARD_TYPES = { clock, weather, app, agenda, notes };
+  // Pinned apps, one tile each (chosen on the TV via "Add favorites").
+  function favorites(card) {
+    const byPackage = {};
+    window.installedApps().forEach((app) => { byPackage[app.package] = app; });
+    const pinned = window.Favorites.list()
+      .map((pkg) => byPackage[pkg])
+      .filter(Boolean)
+      .slice(0, card.max || 8);
+    if (pinned.length) return pinned.map(window.appTile);
+
+    const { node, body } = shell({ title: "Favorites", size: "full" });
+    node.classList.add("static"); // a message, not something to select
+    node.removeAttribute("tabindex");
+    body.appendChild(el("div", "empty-hint",
+      "No favorites yet. Choose Add favorites below to pin apps here."));
+    return node;
+  }
+
+  window.CARD_TYPES = { clock, weather, app, agenda, notes, favorites };
 
   // Open an app tile. Inside the Android TV app this launches the installed
   // app by package name; in a plain browser it follows the URL.
   window.launchTile = function (node) {
     const { url, package: pkg, action } = node.dataset;
+    if (node.dataset.pick) return window.toggleFavorite(node);
     if (action === "allapps") return window.showAllApps();
+    if (action === "editfavorites") return window.showAllApps({ pick: true });
     if (action === "settings") {
       if (window.TvBridge) window.TvBridge.openSettings();
       return;

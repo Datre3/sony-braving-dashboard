@@ -23,7 +23,7 @@
     let best = null;
     let bestScore = Infinity;
 
-    scope().querySelectorAll(".card").forEach((card) => {
+    scope().querySelectorAll(".card:not(.static)").forEach((card) => {
       if (card === from) return;
       const b = card.getBoundingClientRect();
       const inDir =
@@ -58,7 +58,7 @@
     if (dir) {
       e.preventDefault();
       if (!active || !active.classList.contains("card")) {
-        const first = scope().querySelector(".card");
+        const first = scope().querySelector(".card:not(.static)");
         if (first) first.focus();
         return;
       }

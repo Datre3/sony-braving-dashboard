@@ -29,6 +29,7 @@ import java.io.ByteArrayOutputStream
 class MainActivity : Activity() {
 
     private lateinit var webView: WebView
+    private val prefs by lazy { getSharedPreferences("dashboard", MODE_PRIVATE) }
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,6 +114,14 @@ class MainActivity : Activity() {
         }
 
         @JavascriptInterface
+        fun getFavorites(): String = prefs.getString(KEY_FAVORITES, "[]") ?: "[]"
+
+        @JavascriptInterface
+        fun setFavorites(json: String) {
+            prefs.edit().putString(KEY_FAVORITES, json).apply()
+        }
+
+        @JavascriptInterface
         fun version(): String = packageManager.getPackageInfo(packageName, 0).versionName ?: ""
 
         /** Installed TV apps as JSON: [{name, package, banner?, icon?}], banners/icons as data URIs. */
@@ -180,5 +189,6 @@ class MainActivity : Activity() {
     companion object {
         private const val ASSET_ROOT = "file:///android_asset/dashboard/"
         private const val DASHBOARD_URL = ASSET_ROOT + "index.html"
+        private const val KEY_FAVORITES = "favorites"
     }
 }

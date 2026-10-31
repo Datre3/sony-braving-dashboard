@@ -6,4 +6,5 @@
   }
   window.addEventListener("resize", fit);
   document.addEventListener("DOMContentLoaded", fit);
+  if (document.body) fit();
 })();
