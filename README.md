@@ -128,7 +128,7 @@ Tile transparency is set in `js/config.js` too (0 = fully see-through,
 1 = solid; the selected tile is always solid):
 
 - `tileOpacity`: the Add favorites / All apps / Settings tiles (default 0.35)
-- `appTileOpacity`: your app tiles when not selected (default 0.8)
+- `appTileOpacity`: your app tiles when not selected (default 0.55)
 
 ## Make it the TV's home screen (replace the Google TV launcher)
 
